@@ -1,52 +1,33 @@
-// 🦁 Tu vas devoir créer un badge qui possède plusieurs "variant" (couleur) et taille (size).
+//@ts-nocheck
+"use client";
+import { cva } from "class-variance-authority";
+import clsx from "clsx";
+import styles from "./3.module.css";
 
-// 🦁 1. Variants
-// Pour chaque variant, tu vas utiliser les "inline styles" pour définir la couleur de fond et la couleur du texte.
-// Pour ça, tu vas créer un objet `VARIANTS` qui contiendra les clés suivantes :
-// - red
-//   - background: "#ef444415"
-//   - color: "#b91c1c"
-// - green
-//   - background: "#22c55e15"
-//   - color: "#15803d"
-// - purple
-//   - background: "#8b5cf615"
-//   - color: "#6d28d9"
+const badgeVariant = cva(
+  "inline-flex text-sm items-center rounded-md font-medium w-fit",
+  {
+    variants: {
+      size: {
+        default: "px-1.5 py-0.5",
+        lg: "px-2 py-1",
+      },
+      color: {
+        red: "bg-red-500/15 text-red-700",
+        green: "bg-green-500/15 text-green-700",
+        purple: "bg-purple-500/15 text-purple-700",
+      },
+    },
+    defaultVariants: {
+      size: "default",
+      color: "red",
+    },
+  }
+);
 
-// 🦁 2. Sizes
-// Pour chaque size, tu vas utiliser les "inline styles" pour définir la taille du padding et la taille de la police.
-// Pour ça, tu vas créer un objet `SIZES` qui contiendra les clés suivantes :
-// - default
-//   - padding: "2px 6px"
-// - lg
-//   - padding: "4px 8px"
-
-// 🦁 Tu vas ensuite pouvoir utiliser ces objets pour définir les styles de ton badge.
-// Avec les props, tu vas pouvoir récupérer la taille et le variant du badge pour lui appliquer les styles correspondants.
-// Pour ça, tu peux utiliser la syntaxe suivante :
-// 💡 SIZES[size] || SIZES.default;
-// 💡 COLORS[variant] || COLORS.red;
-// Et les appliquer directement sur le style de ton span.
-// 💡 Tu peux ensuite utiliser le spread (...) pour ajouter les styles.
-
-// 🦁 Finalement, voici les styles "commun" entre chaque badge :
-// - display: "inline-flex"
-// - alignItems: "center"
-// - borderRadius: "6px"
-// - fontWeight: "500"
-// - width: "fit-content"
-
-// 💣 Supprime cette ligne
-// eslint-disable-next-line no-unused-vars
 const Badge = ({ size, variant, children }) => {
   return (
-    <span
-      style={
-        {
-          // 🦁 Ajoute les styles
-        }
-      }
-    >
+    <span className={badgeVariant({ size: size, color: variant })}>
       {children}
     </span>
   );
